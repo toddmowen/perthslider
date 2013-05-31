@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Growth of Perth</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -13,14 +13,13 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
-// Enable the visual refresh
-google.maps.visualRefresh = true;
+google.maps.visualRefresh = true;  // new visual style for Google products
 
 var map;
 function initialize() {
   var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(-34.397, 150.644),
+    zoom: 10,
+    center: new google.maps.LatLng(-31.968884,115.931338),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
