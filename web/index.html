@@ -50,8 +50,13 @@ function initialize() {
 	  return googlepoly;
   }
 
+  var allYears = ["1911", "1921", "1933", "1947", "1954", "1961", "1966", "1971", "1976", "1981", "1986", "1991", "1996", "2001", "2006", "2011"]
+  function tick() {
+	  displayYear(allYears.shift());
+  }
+
   function afterParse(docs) {
-	  displayYear("1991");
+	  setInterval(tick, 2000);
   }
 }
 
@@ -60,7 +65,6 @@ function displayYear(year) {
 	for(var council in population) {
 		var polygon = polygons[council];
 		var opacity = population[council] / polygons[council].area_sqkm / 2000;
-		console.log(opacity);
 		polygon.setOptions({fillOpacity: opacity});
 	}
 }
