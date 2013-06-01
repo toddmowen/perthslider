@@ -45,6 +45,7 @@ function initialize() {
 	  poly.style.fillcolor = "00" + basecolor;
 	  googlepoly = myParser.createPolygon(poly, doc);
 	  googlepoly.active = true;
+	  googlepoly.area_sqkm = parseFloat(poly.area_sqkm);
 	  polygons[poly.name] = googlepoly;
 	  return googlepoly;
   }
@@ -58,7 +59,9 @@ function displayYear(year) {
 	population = populations[year];
 	for(var council in population) {
 		var polygon = polygons[council];
-		polygon.setOptions({fillOpacity: 0.5});
+		var opacity = population[council] / polygons[council].area_sqkm / 2000;
+		console.log(opacity);
+		polygon.setOptions({fillOpacity: opacity});
 	}
 }
 

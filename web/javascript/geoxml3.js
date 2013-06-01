@@ -341,6 +341,7 @@ var coordListA = [];
 	simpledata = node.getElementsByTagName('SimpleData');
         placemark = {
           name:  geoXML3.nodeValue(simpledata[1]),
+          area_sqkm:  geoXML3.nodeValue(simpledata[4]),
           description: geoXML3.nodeValue(node.getElementsByTagName('description')[0]),
           styleUrl: geoXML3.nodeValue(node.getElementsByTagName('styleUrl')[0])
         };
