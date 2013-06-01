@@ -93,7 +93,9 @@ function YearSliderControl(controlDiv, map) {
   controlUI.title = 'Click to set the map to Home';
   controlDiv.appendChild(controlUI);
 
-  formHTML = '<form><select id="year">';
+  formHTML = '<form>';
+  formHTML += '<label for="year" style="margin-right: 0.5em">Census:</label>';
+  formHTML += '<select id="year">';
   for(var i = 0; i < allYears.length; i++) {
     formHTML += '<option>' + allYears[i] + '</option>';
   }
