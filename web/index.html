@@ -60,6 +60,7 @@ function initialize() {
 	  var yearSlider = new YearSliderControl(yearSliderDiv, map);
 	  yearSliderDiv.index = 1;
 	  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(yearSliderDiv);
+	  displayYear(allYears[0]);
   }
 
 }
@@ -111,7 +112,6 @@ function YearSliderControl(controlDiv, map) {
   controlUI.appendChild(controlText);
 
   var select = $(controlText).find('#year');
-  console.log(select);
   var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
     min: 1,
     max: allYears.length,
@@ -123,11 +123,9 @@ function YearSliderControl(controlDiv, map) {
     }
   });
   $(select).change(function() {
-    console.log(allYears[this.selectedIndex]);
     slider.slider( "value", this.selectedIndex + 1 );
     displayYear(this.value);
   });
-  displayYear(allYears[0]);
 
 }
 
