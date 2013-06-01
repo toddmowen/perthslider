@@ -42,15 +42,26 @@ function initialize() {
   myParser.parse('resources/LGA2011_perth_metro_simplified.kml');
 
   function addPolygon(poly, doc) {
-	  // remove the (S), (T), etc after the name
-	  poly.name = poly.name.substr(0, poly.name.indexOf("(") - 1);
 	  poly.style.color = "ffffffff";
 	  poly.style.fill = true;
 	  poly.style.fillcolor = "00" + basecolor;
 	  googlepoly = myParser.createPolygon(poly, doc);
 	  googlepoly.active = true;
 	  googlepoly.area_sqkm = parseFloat(poly.area_sqkm);
-	  polygons[poly.name] = googlepoly;
+
+	  // process (S), (T), etc after the name
+	  googlepoly.shortname = poly.name.substr(0, poly.name.indexOf("(") - 1);
+	  if(poly.name.indexOf("(S)") != -1) {
+		  googlepoly.longname = "Shire of " + googlepoly.shortname;
+	  }
+	  else if(poly.name.indexOf("(T)") != -1) {
+		  googlepoly.longname = "Town of " + googlepoly.shortname;
+	  }
+	  else if(poly.name.indexOf("(C)") != -1) {
+		  googlepoly.longname = "City of " + googlepoly.shortname;
+	  }
+
+	  polygons[googlepoly.shortname] = googlepoly;
 	  return googlepoly;
   }
 
@@ -67,9 +78,38 @@ function initialize() {
 
 function displayYear(year) {
 	population = populations[year];
+
+	var historicCouncils = {};
 	for(var council in population) {
+		if(typeof(population[council]) == "number") {
+			var polygon = polygons[council];
+			historicCouncils[council] = {
+				name: polygon.longname,
+				population: population[council],
+				area: polygon.area_sqkm,
+				incorporating: []
+			};
+		}
+	}
+	for(var council in population) {
+		if(typeof(population[council]) == "string") {
+			var polygon = polygons[council];
+			var container = historicCouncils[population[council]];
+			container.incorporating.push(polygon.shortname);
+			container.area += polygon.area_sqkm;
+		}
+	}
+
+	for(var council in population) {
+		var container;
+		if(typeof(population[council]) == "number") {
+			container = historicCouncils[council];
+		}
+		else {
+			container = historicCouncils[population[council]];
+		}
 		var polygon = polygons[council];
-		var opacity = population[council] / polygons[council].area_sqkm / 2000;
+		var opacity = container.population / container.area / 2000;
 		polygon.setOptions({fillOpacity: opacity});
 	}
 }
