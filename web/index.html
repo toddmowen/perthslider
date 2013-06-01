@@ -12,6 +12,7 @@
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="javascript/geoxml3.js"></script>
     <script>
 google.maps.visualRefresh = true;  // new visual style for Google products
 
@@ -22,13 +23,11 @@ function initialize() {
     center: new google.maps.LatLng(-31.968884,115.931338),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  var ctaLayer = new google.maps.KmlLayer({
-    url: 'http://raw.github.com/toddmowen/perthslider/master/web/resources/LGA2011_perth_metro_simplified.kml'
-  });
-  ctaLayer.setMap(map);
+  var myParser = new geoXML3.parser({map: map});
+  myParser.parse('resources/LGA2011_perth_metro_simplified.kml');
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
