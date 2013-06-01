@@ -16,6 +16,8 @@
     <script>
 google.maps.visualRefresh = true;  // new visual style for Google products
 
+basecolor = "1400ff";
+
 var map;
 function initialize() {
   var mapOptions = {
@@ -26,8 +28,18 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  var myParser = new geoXML3.parser({map: map});
+  var myParser = new geoXML3.parser({map: map, createPolygon: addPolygon});
   myParser.parse('resources/LGA2011_perth_metro_simplified.kml');
+
+  function addPolygon(poly, doc) {
+	  console.log(poly);
+	  poly.style.color = "ffffffff";
+	  poly.style.fill = true;
+	  poly.style.fillcolor = "ff" + basecolor;
+	  poly = myParser.createPolygon(poly, doc);
+	  poly.active = true;
+	  return poly;
+  }
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
