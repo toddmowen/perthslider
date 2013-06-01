@@ -26,6 +26,7 @@ var map;
 var polygons = {};
 function initialize() {
   var mapOptions = {
+    keyboardShortcuts: false,  // interferes with slider
     zoom: 10,
     center: new google.maps.LatLng(-31.968884,115.931338),
     mapTypeId: google.maps.MapTypeId.ROADMAP
