@@ -51,13 +51,16 @@ function initialize() {
   }
 
   var allYears = ["1911", "1921", "1933", "1947", "1954", "1961", "1966", "1971", "1976", "1981", "1986", "1991", "1996", "2001", "2006", "2011"]
-  function tick() {
-	  displayYear(allYears.shift());
+  function afterParse(docs) {
+	  displayYear(allYears[0]);
   }
 
-  function afterParse(docs) {
-	  setInterval(tick, 2000);
-  }
+  // Add custom map control
+  var yearSliderDiv = document.createElement('div');
+  var yearSlider = new HomeControl(yearSliderDiv, map);
+
+  yearSliderDiv.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(yearSliderDiv);
 }
 
 function displayYear(year) {
@@ -67,6 +70,40 @@ function displayYear(year) {
 		var opacity = population[council] / polygons[council].area_sqkm / 2000;
 		polygon.setOptions({fillOpacity: opacity});
 	}
+}
+
+function HomeControl(controlDiv, map) {
+
+  // Set CSS styles for the DIV containing the control
+  // Setting padding to 5 px will offset the control
+  // from the edge of the map
+  controlDiv.style.padding = '5px';
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = 'white';
+  controlUI.style.borderStyle = 'solid';
+  controlUI.style.borderWidth = '2px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to set the map to Home';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily = 'Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = '<b>Home</b>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to
+  // Chicago
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+    map.setCenter(chicago)
+  });
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
