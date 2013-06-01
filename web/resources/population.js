@@ -381,7 +381,7 @@ var populations = {
         "Swan": 52968, 
         "Victoria Park": 24313, 
         "Vincent": 24765, 
-        "Wanneroo": "45,024"
+        "Wanneroo": 45024
     }, 
     "1996": {
         "Armadale": 49507, 
@@ -413,7 +413,7 @@ var populations = {
         "Swan": 68795, 
         "Victoria Park": 26096, 
         "Vincent": 24422, 
-        "Wanneroo": "61,660"
+        "Wanneroo": 61660
     }, 
     "2001": {
         "Armadale": 49893, 
