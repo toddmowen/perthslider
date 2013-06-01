@@ -14,6 +14,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="javascript/geoxml3.js"></script>
     <script type="text/javascript" src="resources/population.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
 google.maps.visualRefresh = true;  // new visual style for Google products
 
@@ -50,17 +53,14 @@ function initialize() {
 	  return googlepoly;
   }
 
-  var allYears = ["1911", "1921", "1933", "1947", "1954", "1961", "1966", "1971", "1976", "1981", "1986", "1991", "1996", "2001", "2006", "2011"]
   function afterParse(docs) {
-	  displayYear(allYears[0]);
+	  // Add custom map control
+	  var yearSliderDiv = document.createElement('div');
+	  var yearSlider = new YearSliderControl(yearSliderDiv, map);
+	  yearSliderDiv.index = 1;
+	  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(yearSliderDiv);
   }
 
-  // Add custom map control
-  var yearSliderDiv = document.createElement('div');
-  var yearSlider = new HomeControl(yearSliderDiv, map);
-
-  yearSliderDiv.index = 1;
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(yearSliderDiv);
 }
 
 function displayYear(year) {
@@ -72,12 +72,15 @@ function displayYear(year) {
 	}
 }
 
-function HomeControl(controlDiv, map) {
+var allYears = ["1911", "1921", "1933", "1947", "1954", "1961", "1966", "1971", "1976", "1981", "1986", "1991", "1996", "2001", "2006", "2011"];
+
+function YearSliderControl(controlDiv, map) {
 
   // Set CSS styles for the DIV containing the control
   // Setting padding to 5 px will offset the control
   // from the edge of the map
-  controlDiv.style.padding = '5px';
+  controlDiv.style.padding = '20px';
+  controlDiv.style.width = '80%';
 
   // Set CSS for the control border
   var controlUI = document.createElement('div');
@@ -89,19 +92,43 @@ function HomeControl(controlDiv, map) {
   controlUI.title = 'Click to set the map to Home';
   controlDiv.appendChild(controlUI);
 
+  formHTML = '<form><select id="year">';
+  for(var i = 0; i < allYears.length; i++) {
+    formHTML += '<option>' + allYears[i] + '</option>';
+  }
+  formHTML += '</select></form>';
+
   // Set CSS for the control interior
   var controlText = document.createElement('div');
   controlText.style.fontFamily = 'Arial,sans-serif';
   controlText.style.fontSize = '12px';
   controlText.style.paddingLeft = '4px';
   controlText.style.paddingRight = '4px';
-  controlText.innerHTML = '<b>Home</b>';
+  controlText.innerHTML = formHTML;
   controlUI.appendChild(controlText);
+
+  var select = $(controlText).find('#year');
+  console.log(select);
+  var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+    min: 1,
+    max: allYears.length,
+    range: "min",
+    value: select[ 0 ].selectedIndex + 1,
+    slide: function( event, ui ) {
+      select[ 0 ].selectedIndex = ui.value - 1;
+      displayYear(allYears[ui.value - 1]);
+    }
+  });
+  $(select).change(function() {
+    console.log(allYears[this.selectedIndex]);
+    slider.slider( "value", this.selectedIndex + 1 );
+    displayYear(this.value);
+  });
 
   // Setup the click event listeners: simply set the map to
   // Chicago
   google.maps.event.addDomListener(controlUI, 'click', function() {
-    map.setCenter(chicago)
+    //map.setCenter(chicago)
   });
 
 }
