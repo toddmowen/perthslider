@@ -338,8 +338,9 @@ var coordListA = [];
       for (pm = 0; pm < placemarkNodes.length; pm++) {
         // Init the placemark object
         node = placemarkNodes[pm];
+	simpledata = node.getElementsByTagName('SimpleData');
         placemark = {
-          name:  geoXML3.nodeValue(node.getElementsByTagName('name')[0]),
+          name:  geoXML3.nodeValue(simpledata[1]),
           description: geoXML3.nodeValue(node.getElementsByTagName('description')[0]),
           styleUrl: geoXML3.nodeValue(node.getElementsByTagName('styleUrl')[0])
         };
