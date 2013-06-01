@@ -24,6 +24,13 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
+
+  var ctaLayer = new google.maps.KmlLayer({
+    url: 'resources/LGA2011_perth_metro_simplified.kml'
+    // url: 'file:///Users/towen/perthslider/web/resources/LGA2011_perth_metro_simplified.kml'
+    // url: 'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml'
+  });
+  ctaLayer.setMap(map);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
