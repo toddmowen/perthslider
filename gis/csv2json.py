@@ -19,4 +19,4 @@ for row in reader:
 	year = vals.pop('Year')
 	years[year] = vals
 
-print json.dumps(years, sort_keys=True, indent=4)
+print "var populations =", json.dumps(years, sort_keys=True, indent=4)

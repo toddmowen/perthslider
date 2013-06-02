@@ -356,7 +356,7 @@ var populations = {
         "Bassendean": 13109, 
         "Bayswater": 43810, 
         "Belmont": 26744, 
-        "Cambridge": 22740, 
+        "Cambridge": "Perth", 
         "Canning": 65697, 
         "Claremont": 8822, 
         "Cockburn": 50217, 
@@ -379,8 +379,8 @@ var populations = {
         "Stirling": 172064, 
         "Subiaco": 14971, 
         "Swan": 52968, 
-        "Victoria Park": 24313, 
-        "Vincent": 24765, 
+        "Victoria Park": "Perth", 
+        "Vincent": "Perth", 
         "Wanneroo": 45024
     }, 
     "1996": {
