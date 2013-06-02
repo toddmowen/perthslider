@@ -27,7 +27,7 @@ var polygons = {};
 function initialize() {
   var mapOptions = {
     keyboardShortcuts: false,  // interferes with slider
-    zoom: 10,
+    zoom: 11,
     center: new google.maps.LatLng(-31.968884,115.931338),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -36,6 +36,7 @@ function initialize() {
 
   var myParser = new geoXML3.parser({
 	  map: map,
+	  zoom: false,
 	  createPolygon: addPolygon,
 	  afterParse: afterParse
   });
