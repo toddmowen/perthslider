@@ -952,6 +952,7 @@ var createPolygon = function(placemark, doc) {
       } else {
         p.infoWindow.setPosition(p.bounds.getCenter());
       }
+      p.infoWindow.owningPolygon = p;
       p.infoWindow.open(this.map);
     });
   }

@@ -126,6 +126,13 @@ function displayYear(year) {
 			'<div class="geoxml3_infowindow"><h3>'
 			+ container.name
 			+ '</h3><div>' + '</div></div>';
+		if(polygon.infoWindow.owningPolygon === polygon) {
+			// don't call setOptions unless content has changed (to prevent flicker)
+			var iw = polygon.infoWindow;
+			if(iw.getContent() != polygon.infoWindowOptions.content) {
+				iw.setOptions(polygon.infoWindowOptions);
+			}
+		}
 	}
 }
 
