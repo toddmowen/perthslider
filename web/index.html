@@ -121,6 +121,11 @@ function displayYear(year) {
 		var density = Math.floor(container.population / container.area);
 		var opacity = densityToOpacity(density);
 		polygon.setOptions({fillOpacity: opacity});
+
+		polygon.infoWindowOptions.content =
+			'<div class="geoxml3_infowindow"><h3>'
+			+ container.name
+			+ '</h3><div>' + '</div></div>';
 	}
 }
 
