@@ -118,9 +118,14 @@ function displayYear(year) {
 			container = historicCouncils[population[council]];
 		}
 		var polygon = polygons[council];
-		var opacity = container.population / container.area / 2000;
+		var density = Math.floor(container.population / container.area);
+		var opacity = densityToOpacity(density);
 		polygon.setOptions({fillOpacity: opacity});
 	}
+}
+
+function densityToOpacity(density) {
+	return density / 2000;
 }
 
 var allYears = ["1911", "1921", "1933", "1947", "1954", "1961", "1966", "1971", "1976", "1981", "1986", "1991", "1996", "2001", "2006", "2011"];
