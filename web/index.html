@@ -230,7 +230,8 @@ function LegendControl(controlDiv, map) {
 
   html = ''
   + '<div class="well" style= "width:180px;">'
-  + '  	     <h3 style="text-align: center">Population Density</h3>'
+  + '   <h3 style="text-align: center">Population Density'
+  + '     <br><span>(per km&sup2;)</span></h3>'
   + '  <table class="table table-condensed">'
   ;
 
@@ -239,7 +240,7 @@ function LegendControl(controlDiv, map) {
     var bgcolor = 'rgba(255,0,0,' + densityToOpacity(items[i]) + ')';
     html += ''
     + '    <tr>'
-    + '      <td><div style="height:20px; width:20px; background-color:' + bgcolor + '"></div></td>'
+    + '      <td><div style="margin-right: 10px; height:20px; width:20px; background-color:' + bgcolor + '"></div></td>'
     + '	     <td>' + items[i] + '</td>'
     + '    </tr>'
     ;
