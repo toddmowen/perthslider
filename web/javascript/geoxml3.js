@@ -456,6 +456,9 @@ var coordListA = [];
               poly = createPolygon(placemark,doc);
               poly.active = true;
             }
+	  if (!poly) {
+            continue;
+	  }
           if (!!google.maps) {
             doc.bounds = doc.bounds || new google.maps.LatLngBounds();
             doc.bounds.union(poly.bounds);
