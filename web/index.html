@@ -37,6 +37,7 @@ function initialize() {
   var myParser = new geoXML3.parser({
 	  map: map,
 	  zoom: false,
+	  singleInfoWindow: true,
 	  createPolygon: addPolygon,
 	  afterParse: afterParse
   });
