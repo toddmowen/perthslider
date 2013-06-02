@@ -15,6 +15,7 @@
     <script type="text/javascript" src="javascript/geoxml3.js"></script>
     <script type="text/javascript" src="resources/population.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
@@ -75,7 +76,13 @@ function initialize() {
   }
 
   function afterParse(docs) {
-	  // Add custom map control
+	  // Add legend control
+	  var legendDiv = document.createElement('div');
+	  var legend = new LegendControl(legendDiv, map);
+	  legendDiv.index = 1;
+	  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legendDiv);
+
+	  // Add slider control
 	  var yearSliderDiv = document.createElement('div');
 	  var yearSlider = new YearSliderControl(yearSliderDiv, map);
 	  yearSliderDiv.index = 1;
@@ -173,7 +180,6 @@ function YearSliderControl(controlDiv, map) {
   controlUI.style.borderWidth = '2px';
   controlUI.style.cursor = 'pointer';
   controlUI.style.textAlign = 'center';
-  controlUI.title = 'Click to set the map to Home';
   controlDiv.appendChild(controlUI);
 
   formHTML = '<form>';
@@ -209,6 +215,56 @@ function YearSliderControl(controlDiv, map) {
     displayYear(this.value);
   });
 
+}
+
+function LegendControl(controlDiv, map) {
+
+  controlDiv.style.padding = '20px';
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = 'white';
+  controlUI.style.borderStyle = 'solid';
+  controlUI.style.borderWidth = '2px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  controlDiv.appendChild(controlUI);
+
+  html = ''
+  + '<div class="well" style= "width:240px;">'
+  + '  <table class="table table-condensed">'
+  + '    <tr>'
+  + '      <th colspan="2">'
+  + '  	     <center><h3>Population Density</h3></center> </th>'
+  + '    </tr>'
+  ;
+
+  var items = [0, 500, 1000, 1500, 2000];
+  for(var i = 0; i < items.length; i++) {
+    html += ''
+    + '    <tr>'
+    + '      <td><div style="height:20px; width:20px; background-color:red"></div></td>'
+    + '	     <td>100%</td>'
+    + '    </tr>'
+    ;
+  }
+
+  html += ''
+  + '  </table>'
+  + '  <small>Please note that the boundries are based on the 2011 data'
+  + '  from the government and may be inaccurate past years.'
+  + '  Population and area sizes are from the Australia Bureau of Statistics.'
+  + '  </small>'
+  + '</div>';
+
+  // Set CSS for the control interior
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily = 'Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = html;
+  controlUI.appendChild(controlText);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
