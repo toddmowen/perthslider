@@ -20,3 +20,5 @@ able to present population density at the level of local government
 area. In the future there is potential to "mine" the archives of the
 State Records Office and the State Library, and bring to life population
 and land use data at the suburb or even street level.
+
+**License:** GNU General Public License v3
