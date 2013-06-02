@@ -122,10 +122,7 @@ function displayYear(year) {
 		var opacity = densityToOpacity(density);
 		polygon.setOptions({fillOpacity: opacity});
 
-		polygon.infoWindowOptions.content =
-			'<div class="geoxml3_infowindow"><h3>'
-			+ container.name
-			+ '</h3><div>' + '</div></div>';
+		polygon.infoWindowOptions.content = formatInfo(container);
 		if(polygon.infoWindow.owningPolygon === polygon) {
 			// don't call setOptions unless content has changed (to prevent flicker)
 			var iw = polygon.infoWindow;
@@ -134,6 +131,25 @@ function displayYear(year) {
 			}
 		}
 	}
+}
+
+function formatInfo(container) {
+	html = '<div class="geoxml3_infowindow"><h3 style="text-align: center">'
+		+ container.name
+		+ '</h3><div style="margin-bottom: 1em">'
+		+ container.area.toFixed(1) + ' square kilometers<br/>'
+		+ container.population + ' people<br/>';
+	if(container.incorporating.length) {
+		html += '<p style="font-size: 70%">';
+		html += '(Incorporating the present area of ';
+		html += container.incorporating[0];
+		for(var i = 1; i < container.incorporating.length; i++) {
+			html += ', ' + container.incorporating[i];
+		}
+		html += ')</p>';
+	}
+	html += '</div></div>';
+	return html;
 }
 
 function densityToOpacity(density) {
